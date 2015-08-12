@@ -12,6 +12,7 @@
         var $user = $('<h3 class="user"></h3>');
         var $message = $('<p class="message"></p>');
         var $timestamp = $('<footer class="timestamp"></footer>');
+
         $user.text('@' + tweet.user);
         $user.data('name', tweet.user);
         $message.text(tweet.message);
@@ -22,32 +23,89 @@
         $tweet.append($timestamp);
         return $tweet;
       };
+      
 
       $(document).ready(function(){
-        var $body = $('body');
+        var $tweetContainer = $('.tweet-container');
+        var $updateTweetsBtn = $('.update-tweets');
 
         var index = streams.home.length - 1;
-        var last = index+1;
+        var lastTweet = index+1;
 
         while(index >= 0){
-          var tweet = streams.home[index];
-          var $tweet = createTweet(tweet);
-          $tweet.appendTo($body);
+          var $tweet = createTweet(streams.home[index]);
+          $tweet.appendTo($tweetContainer);
           index -= 1;
         }
-        $('button').on('click', function(){
-          var index = last;
-          last = streams.home.length;
-          while(index < last){
-            var $tweet = createTweet(streams.home[index]);
-            $('button').after($tweet);
-            index += 1;
+
+        /* Needs to be called everytime new tweets are loaded, 
+         * or else it won't handle clicks on those new elements
+         */
+        var userNameClickHandler = function() { 
+          $('.user').on('click', function(){
+            var user = $(this).data('name');
+            var index = streams.users[user].length - 1;
+            var $userTimeline = $('<div class="user-tweets"><h2>@'+user+'\'s Timeline</h2></div>');
+            while(index >= 0){
+              var $tweet = createTweet(streams.users[user][index]);
+              $tweet.appendTo($userTimeline);
+              index -= 1;
+            }
+            $userTimeline.css({'opacity':0});
+            setTimeout(function(){
+              $userTimeline.insertAfter($tweetContainer);
+              $userTimeline.animate({'opacity': 1}, 'slow');
+            },300);
+          });
+        };
+        userNameClickHandler();
+
+        window.newTweetHandler = setInterval(function(){ 
+            if(lastTweet < streams.home.length)
+              $updateTweetsBtn.show('slow');
+          }, 3000);
+
+        $updateTweetsBtn.on('click', function(){
+          $(this).hide('slow');
+          $tweetContainer.animate({'opacity': 0}, 'fast');
+
+          setTimeout(function(){
+            index = lastTweet;
+            lastTweet = streams.home.length;
+            var $btnContainer = $('.btn-container');
+            while(index < lastTweet){
+              var $tweet = createTweet(streams.home[index]);
+              $tweet.insertAfter($btnContainer);
+              index += 1;
+            }
+            $tweetContainer.animate({'opacity': 1}, 'slow');
+            userNameClickHandler();
+          },600);
+        });  
+
+        $(document).mouseup(function (e){
+          var userTimeline = $(".user-tweets");
+
+          if (!userTimeline.is(e.target)
+            && userTimeline.has(e.target).length === 0)
+          {
+            userTimeline.animate({'opacity': 0}, 'fast');
+            setTimeout(function(){ userTimeline.remove(); }, 600);
           }
         });
       });
 
     </script>
-   <button type='button'>Show new tweets</button> 
 
+    <header class="logo">
+      <h1>Twittler</h1>
+    </header>
+
+    <section class="tweet-container">
+      <div class='btn-container'>
+       <button class='update-tweets'>New Tweets Available</button> 
+      </div>
+
+    </section>
   </body>
 </html>

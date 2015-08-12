@@ -1,23 +1,133 @@
-.tweet {
-    border-radius: 4px;
-    border: 1px solid #E1E8ED;
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
     box-sizing: border-box;
-    margin: 15px;
-    padding: 15px;
-    width: 370px;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+  font: 300 16px/22px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: #F9F9F9;
+  padding: 0;
+  margin: 0;
+  border:0;
+}
+.logo{
+    width: 100%;
+    height: 3em;
+    background-color: black;
+    padding-left: 5px;
+}
+.logo h1{
+    font-size: 32px;
+    font-weight: 700;
+    color: white;
+    line-height: 1.5em;
+    margin:0;
+}
+.tweet-container{
+    float:left;
+    width:50%;
+}
+.tweet {
+    border: 1px solid #A1A8AD;
+    border-radius: 4px;
+    margin-left:auto;
+    margin-right:auto;
+    margin-bottom: 20px;
+    padding: 10px;
+    width: 450px;
+    min-height: 120px;
+    background-color: white;
+    position: relative;
 }
 .user {
-	text-align: left;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 700;
 }
-
 .user:hover {
-	text-decoration: underline;
+    text-decoration: underline;
+    color:#60a0ff;
+
 }
 .message{
-	
+    text-align: left;
+    font-size: 20px;
+    font-weight: 300;
+    margin-top: .75em;
+    margin-bottom: 1.5em;
 }
 .timestamp {
-	font-size: 12px;
-	text-align: right;
+    position: absolute;
+    bottom:0;
+    right:0;
+    margin: 5px;
+    font-size: 12px;
+    text-align: right;
+    color:grey;
+}
 
+.user-tweets{
+    float:left;
+    border-radius: 4px;
+    border: 3px solid #A1A8AD;
+    padding: 30px;
+    padding-top: 15px;
+    margin-top: 20px;
+    background-color: #E4F5FF;
+}
+.user-tweets .tweet{
+    border-color: black;
+}
+.user-tweets h2{
+    font-weight: 300;
+    font-size: 24px;
+    margin-bottom: 1em;
+}
+.update-tweets{
+    color:#60A0FF;
+    font-weight: 500;
+    margin:auto;
+    width: 200px;
+    height: 30px;
+    border: 2px solid #A1A8AD;
+    border-radius: 4px;
+    background-color: white;
+    display: none;
+}
+.update-tweets:hover{
+    text-decoration: underline;
+}
+.btn-container{
+    margin:auto;
+    padding-top: 15px;
+    text-align:center;
+    width: 400px;
+    height: 60px;
 }
